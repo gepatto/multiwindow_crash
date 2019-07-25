@@ -42,7 +42,12 @@ class Main extends Sprite
 
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, stage_mousedown);
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keydown);
+		stage.addEventListener(Event.ENTER_FRAME, stage_enterframe);
 		dbv.textfield.text = "Something random: " + Math.random();
+	}
+
+	function stage_enterframe(e:Event){
+		addItem(  Math.random()*stage.stageWidth, Math.random() * stage.stageHeight );
 	}
 
 	function stage_keydown(e:KeyboardEvent){
@@ -52,13 +57,17 @@ class Main extends Sprite
 	}
 
 	function stage_mousedown(e:MouseEvent){
+		 addItem(e.stageX,e.stageY);
+	}
+
+	function addItem(x:Float,y:Float){
 		var i = new CenteredBitmap("cross_large.png");
-		i.x = e.stageX; i.y=e.stageY;
+		i.x = x; i.y=y;
 		instances_m.push(i);
 		addChild(i);
 
 		var j = new CenteredBitmap(assetName);
-		j.x = e.stageX; j.y=e.stageY;
+		j.x = x; j.y=y;
 		instances_s.push(j);
 		dbv.addChild(j);
 		dbv.textfield.text = "Something random: " + Math.random();
