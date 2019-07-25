@@ -37,9 +37,10 @@ class Main extends Sprite
 		secondWindow = cast(stage.application.windows[1], Window);
 
 		mainWindow.stage.addChild(new TextScroller(24,24));
+		mainWindow.x = 0;
 		dbv =  new DebugView();
 		secondWindow.stage.addChild( dbv );
-
+		secondWindow.x = Std.int(mainWindow.display.bounds.width) - secondWindow.width;
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, stage_mousedown);
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keydown);
 		stage.addEventListener(Event.ENTER_FRAME, stage_enterframe);

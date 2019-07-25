@@ -17,7 +17,7 @@
 	<assets path="Assets/fonts" rename="fonts" include="*" />
 	<assets path="Assets/images" rename="images" include="*" />
 	
-	<window id="0" title="main" width="1024"   height="768" background="#333333" resizable="true"/> 
-	<window id="1" title="second" width="1024" height="768" background="#222222" resizable="true"/>
+	<window id="0" title="main"   width="640" height="480" background="#333333" resizable="true"/> 
+	<window id="1" title="second" width="640" height="480" background="#222222" resizable="true"/>
 	
 </project>
