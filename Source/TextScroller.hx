@@ -31,7 +31,9 @@ class TextScroller extends Sprite{
 		textfield.defaultTextFormat = new TextFormat(opensans.fontName, 24, 0xffffff);
 		textfield.selectable = false;
 		textfield.embedFonts = true;
-	
+	    textfield.background = true;
+        textfield.backgroundColor = 0x00000000;
+        
         addChild(textfield);
         addEventListener(Event.ADDED_TO_STAGE, this_addedToStage);
         textfield.text = bufferString;

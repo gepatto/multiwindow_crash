@@ -29,7 +29,7 @@ class DebugView extends Sprite {
 		textfield.x = x;
 		textfield.y = y;
 		textfield.width = 640;
-		textfield.height = 48;
+		textfield.height = 32;
         textfield.autoSize = TextFieldAutoSize.NONE;
 		textfield.defaultTextFormat = new TextFormat(squada.fontName, 24, 0xffffff);
 		textfield.selectable = false;
@@ -39,8 +39,8 @@ class DebugView extends Sprite {
         addChild(container);
 
         addChild(textfield);
-        addChild(new TextScroller(24,24));
-        addChild(new TextScroller(24,80));
+        addChild(new TextScroller(0,32));
+        addChild(new TextScroller(0,80));
         //addEventListener(Event.ADDED_TO_STAGE, this_addedToStage);
     }
        

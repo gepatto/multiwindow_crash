@@ -21,6 +21,7 @@ class Main extends Sprite
 	private var assetName:String = "cross_medium.png";
 	private var opensans:Font;
 	private var textfield:TextField;
+	private var container:Sprite;
 	private var dbv:DebugView;
 	private var maxItems:Int = 50;
 	private var shouldAddToContainer:Bool = false;
@@ -40,8 +41,11 @@ class Main extends Sprite
 
 		secondWindow = cast(stage.application.windows[1], Window);
 
-		mainWindow.stage.addChild(new TextScroller(24,24));
 		mainWindow.x = 0;
+
+		container = new Sprite();
+		addChild(container);
+		addChild(new TextScroller(0,0));
 		dbv =  new DebugView();
 		secondWindow.stage.addChild( dbv );
 		secondWindow.x = Std.int(mainWindow.display.bounds.width) - secondWindow.width;
@@ -85,7 +89,7 @@ class Main extends Sprite
 		var i = new CenteredBitmap("cross_large.png");
 		i.x = x; i.y=y;
 		instances_m.push(i);
-		addChild(i);
+		container.addChild(i);
 
 		var j = new CenteredBitmap(assetName);
 		j.x = x; j.y=y;
@@ -99,7 +103,7 @@ class Main extends Sprite
 		dbv.textfield.text = "Using Asset  " + assetName + " ,Something random: " + Math.random();
 
 		if(instances_m.length>maxItems){
-			removeChild(instances_m[0]);
+			container.removeChild(instances_m[0]);
 			instances_m.shift();
 		}
 		
