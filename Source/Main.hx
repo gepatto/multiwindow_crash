@@ -1,5 +1,7 @@
 package;
 
+import openfl.events.TimerEvent;
+import openfl.utils.Timer;
 import openfl.ui.Keyboard;
 import openfl.events.KeyboardEvent;
 import openfl.events.MouseEvent;
@@ -16,13 +18,15 @@ class Main extends Sprite
 	var mainWindow:Window;
 	var secondWindow:Window;
 
-    private var bufferString:String = "Hit A to toggle between assets. This is a test, do not leave your desk. Coffee and tissues will be provided";
 	private var assetName:String = "cross_medium.png";
 	private var opensans:Font;
 	private var textfield:TextField;
 	private var dbv:DebugView;
+	private var maxItems:Int = 50;
+	private var shouldAddToContainer:Bool = false;
 	private var instances_m:Array<CenteredBitmap> = [];
 	private var instances_s:Array<CenteredBitmap> = [];
+	
 
 	public function new()
 	{
@@ -44,21 +48,37 @@ class Main extends Sprite
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, stage_mousedown);
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keydown);
 		stage.addEventListener(Event.ENTER_FRAME, stage_enterframe);
+		
 		dbv.textfield.text = "Something random: " + Math.random();
 	}
 
 	function stage_enterframe(e:Event){
-		addItem(  Math.random()*stage.stageWidth, Math.random() * stage.stageHeight );
+		addItem(  Math.random()*stage.stageWidth, 80.0 + Math.random() * stage.stageHeight );
 	}
 
 	function stage_keydown(e:KeyboardEvent){
-		if(e.keyCode == Keyboard.A){
-			assetName = assetName=="cross_medium.png"?"cross_large.png":"cross_medium.png";
+		
+		switch(e.keyCode){
+			
+			case Keyboard.A:
+				assetName = assetName=="cross_medium.png"?"cross_large.png":"cross_medium.png";
+			
+			case Keyboard.C:
+				for(i in 0... instances_m.length ){
+					if(shouldAddToContainer){
+						dbv.container.removeChild(instances_s[i]);
+						dbv.addChild(instances_s[i]);
+					}else{
+						dbv.removeChild(instances_s[i]);
+						dbv.container.addChild(instances_s[i]);
+					}
+				}
+				shouldAddToContainer = !shouldAddToContainer;
 		}
 	}
 
 	function stage_mousedown(e:MouseEvent){
-		 addItem(e.stageX,e.stageY);
+		addItem(e.stageX,e.stageY);
 	}
 
 	function addItem(x:Float,y:Float){
@@ -70,16 +90,25 @@ class Main extends Sprite
 		var j = new CenteredBitmap(assetName);
 		j.x = x; j.y=y;
 		instances_s.push(j);
-		dbv.addChild(j);
-		dbv.textfield.text = "Something random: " + Math.random();
+		
+		if(shouldAddToContainer){
+			dbv.container.addChild(j);
+		}else{
+			dbv.addChild(j);
+		}
+		dbv.textfield.text = "Using Asset  " + assetName + " ,Something random: " + Math.random();
 
-		if(instances_m.length>25){
+		if(instances_m.length>maxItems){
 			removeChild(instances_m[0]);
 			instances_m.shift();
 		}
 		
-		if(instances_s.length>25){
-			dbv.removeChild(instances_s[0]);
+		if(instances_s.length>maxItems){
+			if(shouldAddToContainer){
+				dbv.container.removeChild(instances_s[0]);
+			}else{
+				dbv.removeChild(instances_s[0]);
+			}
 			instances_s.shift();
 		}
 	}

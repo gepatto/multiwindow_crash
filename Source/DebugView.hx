@@ -3,6 +3,7 @@ package;
 import openfl.Assets;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
+import openfl.text.TextFieldAutoSize;
 import openfl.text.Font;
 import openfl.display.Sprite;
 import openfl.events.Event;
@@ -13,10 +14,14 @@ class DebugView extends Sprite {
     private var squada:Font;
     private var opensans:Font;
 	public var textfield:TextField;
+    public var container:Sprite;
+
 
     public function new () {
         
         super();
+
+        container = new Sprite();
 
         squada = Assets.getFont("fonts/Squada_One.ttf");
 
@@ -25,10 +30,14 @@ class DebugView extends Sprite {
 		textfield.y = y;
 		textfield.width = 640;
 		textfield.height = 48;
+        textfield.autoSize = TextFieldAutoSize.NONE;
 		textfield.defaultTextFormat = new TextFormat(squada.fontName, 24, 0xffffff);
 		textfield.selectable = false;
 		textfield.embedFonts = true;
-	
+        textfield.background = true;
+        textfield.backgroundColor = 0x00000000;
+        addChild(container);
+
         addChild(textfield);
         addChild(new TextScroller(24,24));
         addChild(new TextScroller(24,80));

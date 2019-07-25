@@ -1,5 +1,7 @@
 package;
 
+import openfl.events.TimerEvent;
+import openfl.utils.Timer;
 import openfl.utils.Assets;
 import openfl.events.Event;
 
@@ -9,10 +11,11 @@ import openfl.text.TextFormat;
 import openfl.text.Font;
 
 class TextScroller extends Sprite{
-    
-    private var bufferString:String = "Hit A to toggle between assets. This is a test, do not leave your desk. Coffee and tissues will be provided";
+
+    private var bufferString:String = "Hit A to toggle between assets. Hit C to add to toggle bewteen adding to a container or the stage in the second window";
 	private var opensans:Font;
 	private var textfield:TextField;
+    private var iTimer:Timer;
 
     public function new( x:Float, y:Float){
         
@@ -32,13 +35,16 @@ class TextScroller extends Sprite{
         addChild(textfield);
         addEventListener(Event.ADDED_TO_STAGE, this_addedToStage);
         textfield.text = bufferString;
+
     }
 
     function this_addedToStage(e:Event){
-        addEventListener(Event.ENTER_FRAME, this_enterFrame);
+        iTimer = new Timer(120,0);	
+		iTimer.addEventListener(TimerEvent.TIMER, onTimer);
+		iTimer.start();
     }
 
-    function this_enterFrame(e:Event){
+    function onTimer(e:Event){
         var s = bufferString.charAt(0);
         bufferString = bufferString.substr(1) + s;
         textfield.text = bufferString;
